@@ -3,22 +3,28 @@
     <label class="block text-gray-700 font-bold mb-2" for="name">
       Name
     </label>
-    <input formControlName="name" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Name">
+    <input formControlName="name" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Name">
+    <div *ngIf="myForm.controls['name'].invalid && (myForm.controls['name'].dirty || myForm.controls['name'].touched)">
+      Precisa de um nome.
+    </div>
   </div>
   <div class="mb-4">
     <label class="block text-gray-700 font-bold mb-2" for="email">
       Email
     </label>
-    <input formControlName="email" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email">
+    <input formControlName="email" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" placeholder="Email">
+    <div *ngIf="myForm.controls['email'].invalid && (myForm.controls['email'].dirty || myForm.controls['email'].touched)">
+      Precisa de um email viável.
+    </div>
   </div>
   <div class="mb-4">
     <label class="block text-gray-700 font-bold mb-2" for="nif">
       NIF
     </label>
-    <input formControlName="nif" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nif" type="text" placeholder="NIF">
+    <input formControlName="nif" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="NIF">
     <div *ngIf="myForm.controls['nif'].invalid && (myForm.controls['nif'].dirty || myForm.controls['nif'].touched)">
-      <div *ngIf="myForm.controls['nif'].errors?.['maxlength']">
-        Só é permitido 9 números.
+      <div *ngIf="myForm.controls['nif'].errors?.['pattern']">
+        Precisa de 9 números e só números.
       </div>
     </div>
   </div>
@@ -26,9 +32,18 @@
     <label class="block text-gray-700 font-bold mb-2" for="password">
       Password
     </label>
-    <input formControlName="password" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password">
+    <input formControlName="password" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" placeholder="Password">
+    <div *ngIf="myForm.controls['password'].invalid && (myForm.controls['password'].dirty || myForm.controls['password'].touched)">
+      <div *ngIf="myForm.controls['password'].errors?.['passwordInvalid']">
+        Por favor usar pelo menos um número, uma letra grande e pequena e um caracter especial.
+      </div>
+    </div>
   </div>
-  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" [disabled]="myForm.invalid">
-    Submit
+  <div *ngIf="myForm.controls['name'].invalid || myForm.controls['email'].invalid || myForm.controls['nif'].invalid || myForm.controls['password'].invalid">
+    É preciso completar todos os passos.
+  </div>
+  <button class="..." type="submit" [disabled]="myForm.invalid">
+    {{ submitted ? 'Form concluído' : 'Submit' }}
   </button>
 </form>
+
